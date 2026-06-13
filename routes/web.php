@@ -9,20 +9,20 @@ use App\Http\Controllers\Web\Frontend\SubscriberController;
 use App\Http\Controllers\Web\NotificationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',[HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/affiliate/{slug}',[AffiliateController::class, 'store'])->name('store');
+Route::get('/affiliate/{slug}', [AffiliateController::class, 'store'])->name('store');
 
-Route::get('/post',[HomeController::class, 'index'])->name('post.index');
-Route::get('/post/show/{slug}',[HomeController::class, 'post'])->name('post.show');
+Route::get('/post', [HomeController::class, 'index'])->name('post.index');
+Route::get('/post/show/{slug}', [HomeController::class, 'post'])->name('post.show');
 
 //Social login test routes
-Route::get('social-login/{provider}',[SocialLoginController::class,'RedirectToProvider'])->name('social.login');
-Route::get('social-login/{provider}/callback',[SocialLoginController::class, 'HandleProviderCallback']);
+Route::get('social-login/{provider}', [SocialLoginController::class, 'RedirectToProvider'])->name('social.login');
+Route::get('social-login/{provider}/callback', [SocialLoginController::class, 'HandleProviderCallback']);
 
-Route::post('subscriber/store',[SubscriberController::class, 'store'])->name('subscriber.data.store');
+Route::post('subscriber/store', [SubscriberController::class, 'store'])->name('subscriber.data.store');
 
-Route::post('contact/store',[ContactController::class, 'store'])->name('web.contact.store');
+Route::post('contact/store', [ContactController::class, 'store'])->name('web.contact.store');
 
 Route::controller(NotificationController::class)->prefix('notification')->name('notification.')->group(function () {
     Route::get('/', 'index')->name('index');
@@ -30,9 +30,9 @@ Route::controller(NotificationController::class)->prefix('notification')->name('
     Route::POST('read/all', 'readAll')->name('read.all');
 })->middleware('auth');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::get('/page/{slug}',[PageController::class, 'index']);
+Route::get('/page/{slug}', [PageController::class, 'index']);
 
 // React SPA Fallback Routes
 Route::get('/{any}', [HomeController::class, 'index'])->where('any', 'login|register|dashboard|property/.*');
