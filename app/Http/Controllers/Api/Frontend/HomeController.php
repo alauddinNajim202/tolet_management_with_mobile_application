@@ -131,4 +131,14 @@ class HomeController extends Controller
 
         return Helper::jsonResponse(true, 'Properties retrieved successfully', 200, $properties);
     }
+
+
+
+
+    public function propertyDetails($id)
+    {
+        $property = Property::with('category', 'division', 'district', 'upazila', 'images')->find($id);
+
+        return Helper::jsonResponse(true, 'Property details retrieved successfully ', 200, $property);
+    }
 }

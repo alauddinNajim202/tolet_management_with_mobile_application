@@ -42,6 +42,7 @@ Route::get('/location/list', [HomeController::class, 'divisions']);
 
 
 Route::get('/property/list', [HomeController::class, 'propertyList']);
+Route::get('/property/details/{id}', [HomeController::class, 'propertyDetails']);
 
 /*
 # Auth Route

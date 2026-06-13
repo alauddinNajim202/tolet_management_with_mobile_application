@@ -1,20 +1,29 @@
-@extends('auth.app')
-
-@section('content')
-<!-- CONTAINER OPEN -->
-<div class="col col-login mx-auto text-center">
-    <a href="index.html" class="text-center">
-        <img src="{{ asset($settings->logo ?? 'default/logo.svg') }}" class="header-brand-img" alt="">
-    </a>
-</div>
-<div class="container-login100">
-    <div class="wrap-login100 p-5 bg-white rounded-lg shadow" style="max-width: 400px;">
-        <div class="card-body text-center">
-            <h4 class="mb-4 font-weight-bold">Welcome Back </h4>
-            <p class="text-muted mb-4">Log in to access your dashboard</p>
-            <a href="{{ route('login') }}" class="btn btn-primary btn-lg btn-block">
-                Login
-            </a>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeConnect - Find your next home</title>
+    <!-- Include Vite Assets -->
+    @viteReactRefresh
+    @vite(['resources/js/app.jsx', 'resources/css/app.css'])
+</head>
+<body class="antialiased" style="background: #eef2f6;">
+    <div id="blade-test" style="text-align: center; padding: 20px; font-family: sans-serif; display: none;">
+        <h1>If you see this, Blade is working but React is NOT loading.</h1>
     </div>
-</div>
+    <div id="root">
+        <h2 style="text-align: center; margin-top: 50px; font-family: sans-serif;">Loading Canvas App...</h2>
+    </div>
+
+    <script>
+        // Fallback script to show the blade-test div if React fails to mount within 3 seconds
+        setTimeout(() => {
+            const root = document.getElementById('root');
+            if (root && root.innerHTML.includes('Loading Canvas App')) {
+                document.getElementById('blade-test').style.display = 'block';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

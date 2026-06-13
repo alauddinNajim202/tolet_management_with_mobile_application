@@ -39,7 +39,7 @@
                                 <button type="button" class="btn btn-warning"><a href="#">Export</a></button>
                             </div>
                             <div class="card-options ms-auto">
-                                <a href="{{ route('admin.faq.create') }}" class="btn btn-primary btn-sm">Add</a>
+                                <a href="{{ route('admin.faq.create') }}" class="btn btn-warning text-white fw-semibold shadow-sm px-4 rounded-pill" style="background-color: #f97316; border-color: #f97316;"><i class="fe fe-plus me-2"></i>Add</a>
                             </div>
                         </div>
                         <div class="card-body">

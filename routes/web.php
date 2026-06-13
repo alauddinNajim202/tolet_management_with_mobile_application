@@ -33,3 +33,6 @@ Route::controller(NotificationController::class)->prefix('notification')->name('
 require __DIR__.'/auth.php';
 
 Route::get('/page/{slug}',[PageController::class, 'index']);
+
+// React SPA Fallback Routes
+Route::get('/{any}', [HomeController::class, 'index'])->where('any', 'login|register|dashboard|property/.*');

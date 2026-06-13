@@ -35,11 +35,11 @@ use App\Http\Controllers\Web\Backend\SubscriberController;
 use App\Http\Controllers\Web\Backend\TemplateEmailController;
 use App\Http\Controllers\Web\Backend\TransactionController;
 
-use App\Http\Controllers\Web\Backend\ReportController;
-;
+use App\Http\Controllers\Web\Backend\ReportController;;
+
 use Illuminate\Support\Facades\Artisan;
 
-Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:admin|staff']);
+Route::get("admin/dashboard", [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:admin|staff']);
 
 Route::group(['middleware' => ['web-admin']], function () {
 
@@ -313,19 +313,14 @@ Route::group(['middleware' => ['web-admin']], function () {
         return redirect()->back()->with('t-success', 'Message sent successfully');
     })->name('optimize');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /*
+    * Property Route
+    */
+    Route::controller(\App\Http\Controllers\Web\Backend\PropertyController::class)->prefix('property')->name('property.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/status/{id}', 'statusUpdate')->name('status');
+        Route::delete('/destroy/{id}', 'destroy')->name('destroy');
+    });
 });
 
 //livewire
@@ -337,4 +332,3 @@ Route::get('livewire/crud', function () {
 Route::get('file-manager', [FileManagerController::class, 'index'])->name('file-manager');
 Route::post('file-upload', [FileManagerController::class, 'upload']);
 Route::delete('file-delete/{file}', [FileManagerController::class, 'delete']);
-

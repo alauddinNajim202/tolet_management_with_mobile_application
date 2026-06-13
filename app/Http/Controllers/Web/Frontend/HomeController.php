@@ -45,16 +45,15 @@ class HomeController extends Controller
         $posts = Post::with(['category', 'subcategory', 'user', 'images'])->where('status', 'active')->latest()->limit(3)->get();
 
         $types = Type::where('status', 'active')->get();
-        $projects = Project::where('status', 'active')->get();
 
-        $products = Product::with(['category', 'user'])->where('status', 'active')->get();
 
         // return view("frontend.{$this->theme}.layouts.home.index", compact('cms', 'posts', 'types', 'projects', 'products', 'socials'));
 
         return view('welcome');
     }
 
-    public function post($slug){
+    public function post($slug)
+    {
         //CMS Data
         $cmsData = CMSData::all()->makeHidden(['created_at', 'updated_at']);
         $cms = [
