@@ -171,4 +171,5 @@ class PropertyController extends Controller
             return Helper::jsonErrorResponse($e->getMessage(), 500);
         }
     }
+
 }

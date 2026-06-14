@@ -17,14 +17,14 @@ const PropertyList = () => {
         try {
             // Build query based on category
             let url = '/api/property/list';
-            const queryParams = new URLSearchParams();
-            if (activeCat !== 'All') {
-                // Try to filter by category name if API supports, or map to category ID
-                // Depending on the backend, for now we will send search or fetch all and filter locally 
-                // if the API only filters by category_id. We'll fetch all and filter in frontend for this demo.
+            
+            const token = localStorage.getItem('auth_token');
+            const headers = { 'Accept': 'application/json' };
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
             }
 
-            const res = await fetch(url);
+            const res = await fetch(url, { headers });
             const data = await res.json();
 
             if (res.ok && data.status) {
@@ -42,6 +42,42 @@ const PropertyList = () => {
     useEffect(() => {
         fetchProperties();
     }, []);
+
+    const toggleFavorite = async (e, propertyId) => {
+        e.preventDefault();
+        
+        const token = localStorage.getItem('auth_token');
+        if (!token) {
+            alert('অনুগ্রহ করে লগইন করুন (Please log in to add favorites).');
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/auth/property/favorite`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ property_id: propertyId })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                // Update local state
+                setProperties(properties.map(p => {
+                    if (p.id === propertyId) {
+                        return { ...p, is_favorited: data.data.is_favorited };
+                    }
+                    return p;
+                }));
+            } else {
+                alert(data.message || 'Error toggling favorite');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     // Local filtering by category and search term
     const filteredProperties = properties.filter(prop => {
@@ -129,8 +165,8 @@ const PropertyList = () => {
                                 <div className="property-card">
                                     <div className="card-image-wrap">
                                         <span className="status-badge">{prop.status === 'active' ? 'For Rent' : prop.status}</span>
-                                        <div className="favorite-btn" onClick={(e) => { e.preventDefault(); }}>
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                        <div className="favorite-btn" onClick={(e) => toggleFavorite(e, prop.id)}>
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill={prop.is_favorited ? "#ef4444" : "none"} stroke={prop.is_favorited ? "#ef4444" : "currentColor"} strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                                         </div>
                                         <img src={imgUrl} alt={prop.title} className="card-image" />
                                     </div>

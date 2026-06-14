@@ -59,4 +59,9 @@ class Property extends Model
     {
         return $this->belongsTo(Upazila::class);
     }
+
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class);
+    }
 }

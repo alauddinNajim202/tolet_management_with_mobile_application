@@ -129,6 +129,18 @@ class HomeController extends Controller
 
         $properties = $query->get();
 
+        $user = auth('api')->user();
+        if ($user) {
+            $favoritedPropertyIds = \App\Models\Favourite::where('user_id', $user->id)->pluck('property_id')->toArray();
+            $properties->each(function ($property) use ($favoritedPropertyIds) {
+                $property->is_favorited = in_array($property->id, $favoritedPropertyIds);
+            });
+        } else {
+            $properties->each(function ($property) {
+                $property->is_favorited = false;
+            });
+        }
+
         return Helper::jsonResponse(true, 'Properties retrieved successfully', 200, $properties);
     }
 
@@ -138,6 +150,15 @@ class HomeController extends Controller
     public function propertyDetails($id)
     {
         $property = Property::with('category', 'division', 'district', 'upazila', 'images')->find($id);
+
+        if ($property) {
+            $user = auth('api')->user();
+            if ($user) {
+                $property->is_favorited = \App\Models\Favourite::where('user_id', $user->id)->where('property_id', $property->id)->exists();
+            } else {
+                $property->is_favorited = false;
+            }
+        }
 
         return Helper::jsonResponse(true, 'Property details retrieved successfully ', 200, $property);
     }

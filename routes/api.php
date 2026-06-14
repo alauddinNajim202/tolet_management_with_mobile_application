@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
@@ -17,9 +21,7 @@ use App\Http\Controllers\Api\Frontend\SocialLinksController;
 use App\Http\Controllers\Api\Frontend\SubcategoryController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PropertyController;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\FavouriteController;
 
 //page
 Route::get('/page/home', [HomeController::class, 'index']);
@@ -53,8 +55,13 @@ Route::get('/property/details/{id}', [HomeController::class, 'propertyDetails'])
 
 
 Route::middleware(['auth:api'])->controller(PropertyController::class)->prefix('auth/property')->group(function () {
-    Route::get('/list', 'index');
+    Route::get('/my-listing', 'index');
     Route::post('/store', 'store');
+});
+
+Route::middleware(['auth:api'])->controller(FavouriteController::class)->prefix('auth/property')->group(function () {
+    Route::post('/favorite', 'toggleFavorite');
+    Route::get('/favorite/list', 'favoritesList');
 });
 
 

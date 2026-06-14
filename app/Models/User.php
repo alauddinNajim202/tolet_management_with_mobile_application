@@ -166,4 +166,9 @@ class User extends Authenticatable implements JWTSubject
         return Room::where('user_one_id', $this->id)->orWhere('user_two_id', $this->id);
     }
 
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class);
+    }
+
 }
