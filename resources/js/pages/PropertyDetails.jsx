@@ -78,27 +78,22 @@ const PropertyDetails = () => {
                 </div>
             </div>
 
-            {/* Image Gallery */}
-            <div style={{marginBottom: '40px'}}>
-                <div style={{width: '100%', height: '500px', borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: '16px', background: '#eee'}}>
-                    <img src={allImages[activeImage]} alt="Main" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+            {/* Airbnb Style Image Gallery Collage */}
+            <div style={{ marginBottom: '40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridTemplateRows: '200px 200px', gap: '12px', borderRadius: 'var(--radius-xl)', overflow: 'hidden' }}>
+                <div style={{ gridColumn: 'span 2', gridRow: 'span 2', background: '#e2e8f0' }}>
+                    <img src={allImages[0]} alt="Main" style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', transition: 'transform 0.5s' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'} />
                 </div>
-                {allImages.length > 1 && (
-                    <div style={{display: 'flex', gap: '16px', overflowX: 'auto', paddingBottom: '8px'}}>
-                        {allImages.map((img, idx) => (
-                            <div 
-                                key={idx} 
-                                onClick={() => setActiveImage(idx)}
-                                style={{
-                                    width: '120px', height: '80px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', cursor: 'pointer', flexShrink: 0,
-                                    border: activeImage === idx ? '3px solid var(--primary-blue)' : 'none', opacity: activeImage === idx ? 1 : 0.7
-                                }}
-                            >
-                                <img src={img} alt={`Thumb ${idx}`} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                {/* Additional Images up to 4 */}
+                {[1, 2, 3, 4].map(idx => (
+                    <div key={idx} style={{ background: '#e2e8f0', position: 'relative' }}>
+                        <img src={allImages[idx] || allImages[0]} alt={`Thumb ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, transition: 'opacity 0.3s' }} onMouseOver={(e) => e.currentTarget.style.opacity = 1} onMouseOut={(e) => e.currentTarget.style.opacity = 0.9} />
+                        {idx === 4 && allImages.length > 5 && (
+                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '20px', pointerEvents: 'none' }}>
+                                +{allImages.length - 5} photos
                             </div>
-                        ))}
+                        )}
                     </div>
-                )}
+                ))}
             </div>
 
             {/* Main Content Layout */}

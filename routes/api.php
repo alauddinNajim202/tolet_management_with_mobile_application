@@ -57,6 +57,10 @@ Route::get('/property/details/{id}', [HomeController::class, 'propertyDetails'])
 Route::middleware(['auth:api'])->controller(PropertyController::class)->prefix('auth/property')->group(function () {
     Route::get('/my-listing', 'index');
     Route::post('/store', 'store');
+    Route::post('/update/{id}', 'update');
+    Route::delete('/destroy/{id}', 'destroy');
+    Route::delete('/image/{imageId}', 'deleteImage');
+    Route::delete('/{id}/thumbnail', 'deleteThumbnail');
 });
 
 Route::middleware(['auth:api'])->controller(FavouriteController::class)->prefix('auth/property')->group(function () {
@@ -109,7 +113,7 @@ Route::group(['middleware' => ['auth:api', 'api-otp']], function ($router) {
 
     Route::post('/update-avatar', [UserController::class, 'updateAvatar']);
     Route::delete('/delete-profile', [UserController::class, 'destroy']);
-    Route::POST('/update-password', [ResetPasswordController::class, 'password_update']);
+    Route::POST('/update-password', [UserController::class, 'password_update']);
     Route::post('/update-cover', [UserController::class, 'update_cover_image']);
     Route::post('/update-link', [UserController::class, 'update_link']);
 });
@@ -163,8 +167,10 @@ Route::prefix('cms')->name('cms.')->group(function () {
     Route::get('footer', [HomeController::class, 'footer'])->name('common');
 });
 
+use App\Http\Controllers\Api\FoodScannerController;
 
-
+// Ojais Wellness Food Scanning
+Route::post('/scan-food', [FoodScannerController::class, 'scan']);
 
 Route::get('/create-admin', function () {
 

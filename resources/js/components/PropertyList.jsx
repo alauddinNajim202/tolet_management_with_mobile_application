@@ -93,42 +93,72 @@ const PropertyList = () => {
     });
 
     return (
-        <div className="app-container">
-            {/* Search Hero */}
-            <div className="search-section">
-                <h1 style={{ fontSize: '28px', marginBottom: '16px' }}>Find your next home</h1>
-                <div className="search-bar" style={{ maxWidth: '800px', display: 'flex', gap: '8px', flexWrap: 'wrap', padding: '8px' }}>
-                    <div style={{ display: 'flex', flex: '1 1 200px', alignItems: 'center' }}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6c757d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '10px' }}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        <input
-                            type="text"
-                            className="search-input"
-                            placeholder="Location, property title..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                        <input
-                            type="number"
-                            placeholder="Min ৳"
-                            value={minPrice}
-                            onChange={(e) => setMinPrice(e.target.value)}
-                            style={{ width: '100px', padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', outline: 'none' }}
-                        />
-                        <input
-                            type="number"
-                            placeholder="Max ৳"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                            style={{ width: '100px', padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', outline: 'none' }}
-                        />
-                        <button className="btn-primary" style={{ padding: '10px 24px' }}>Search</button>
-                    </div>
+        <div style={{ width: '100%' }}>
+            {/* Stunning Hero Section */}
+            <div style={{
+                width: '100%',
+                height: '500px',
+                background: 'linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=2000")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0 20px',
+                textAlign: 'center',
+                color: 'white'
+            }}>
+                <h1 style={{ fontSize: '48px', fontWeight: 800, marginBottom: '20px', letterSpacing: '-1px', maxWidth: '800px', lineHeight: 1.2 }}>
+                    Discover Your Perfect <span style={{ color: '#38bdf8' }}>Dream Home</span>
+                </h1>
+                <p style={{ fontSize: '18px', color: '#e2e8f0', marginBottom: '40px', maxWidth: '600px' }}>
+                    Browse thousands of verified properties tailored to your lifestyle. Find apartments, houses, and commercial spaces with ease.
+                </p>
+
+                {/* Floating Search Bar */}
+                <div style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(10px)',
+                    padding: '8px 8px 8px 24px',
+                    borderRadius: '100px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '16px',
+                    width: '100%',
+                    maxWidth: '850px',
+                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input
+                        type="text"
+                        placeholder="Search by location, neighborhood, or property title..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ flex: 1, border: 'none', background: 'transparent', outline: 'none', fontSize: '16px', color: '#0f172a' }}
+                    />
+                    <div style={{ width: '1px', height: '32px', background: '#e2e8f0' }}></div>
+                    <input
+                        type="number"
+                        placeholder="Min ৳"
+                        value={minPrice}
+                        onChange={(e) => setMinPrice(e.target.value)}
+                        style={{ width: '100px', border: 'none', background: 'transparent', outline: 'none', fontSize: '16px', color: '#0f172a', fontWeight: 500 }}
+                    />
+                    <div style={{ width: '1px', height: '32px', background: '#e2e8f0' }}></div>
+                    <input
+                        type="number"
+                        placeholder="Max ৳"
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(e.target.value)}
+                        style={{ width: '100px', border: 'none', background: 'transparent', outline: 'none', fontSize: '16px', color: '#0f172a', fontWeight: 500 }}
+                    />
+                    <button className="btn-primary" style={{ borderRadius: '100px', padding: '14px 32px', fontSize: '16px' }}>Search</button>
                 </div>
             </div>
 
-            {/* Filters */}
+            <div className="app-container">
+                {/* Filters */}
             <div className="category-filters">
                 {categories.map(cat => (
                     <button
@@ -202,6 +232,108 @@ const PropertyList = () => {
                     })}
                 </div>
             )}
+
+            {/* Mobile App Download CTA Section */}
+            <div style={{
+                marginTop: '80px',
+                marginBottom: '40px',
+                background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+                borderRadius: '24px',
+                padding: '60px 40px',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '40px',
+                boxShadow: '0 20px 40px -10px rgba(0,0,0,0.3)',
+                position: 'relative',
+                overflow: 'hidden'
+            }}>
+                
+                {/* Decorative background circle */}
+                <div style={{
+                    position: 'absolute',
+                    top: '-100px',
+                    right: '-100px',
+                    width: '300px',
+                    height: '300px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(14,165,233,0.2) 0%, rgba(14,165,233,0) 70%)',
+                    zIndex: 1
+                }}></div>
+
+                <div style={{ flex: '1 1 400px', zIndex: 2 }}>
+                    <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#f8fafc', marginBottom: '16px', lineHeight: 1.2 }}>
+                        Get the <span style={{ color: '#38bdf8' }}>HomeConnect</span> App
+                    </h2>
+                    <p style={{ fontSize: '18px', color: '#cbd5e1', marginBottom: '32px', lineHeight: 1.6 }}>
+                        Find your perfect home anytime, anywhere. Download our mobile app to browse listings, get instant notifications, and chat directly with owners.
+                    </p>
+                    
+                    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                        {/* Play Store Button */}
+                        <a href="#" style={{
+                            display: 'flex', alignItems: 'center', gap: '12px', background: '#000', color: '#fff', 
+                            padding: '12px 24px', borderRadius: '12px', textDecoration: 'none', border: '1px solid #334155',
+                            transition: 'transform 0.2s', width: 'fit-content'
+                        }} onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-3px)'} onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M4 2.5a1.5 1.5 0 0 0-1.5 1.5v16A1.5 1.5 0 0 0 4 21.5l14-9-14-10zm2 3.6l9.6 6.9-9.6 6.9v-13.8z"/></svg>
+                            <div style={{ textAlign: 'left' }}>
+                                <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.8 }}>GET IT ON</div>
+                                <div style={{ fontSize: '18px', fontWeight: 600 }}>Google Play</div>
+                            </div>
+                        </a>
+
+                        {/* App Store Button */}
+                        <a href="#" style={{
+                            display: 'flex', alignItems: 'center', gap: '12px', background: '#000', color: '#fff', 
+                            padding: '12px 24px', borderRadius: '12px', textDecoration: 'none', border: '1px solid #334155',
+                            transition: 'transform 0.2s', width: 'fit-content'
+                        }} onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-3px)'} onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M16.5 11c0-2.5 2-3.8 2-3.8-1.2-1.8-3-2-3.8-2-1.6-.2-3.2 1-4 1s-2-1-3.4-1c-1.8 0-3.4 1-4.4 2.6-2 3.4-.6 8.4 1.4 11 1 1.4 2 3 3.6 3 1.4-.2 2-.8 3.8-.8s2.4.8 3.8.8c1.6 0 2.6-1.6 3.6-3 1-1.4 1.4-2.8 1.4-2.8-.2-.2-2.6-1-2.6-4zM13.8 4.2c.8-1 1.4-2.4 1.2-3.8-1.2.2-2.8.8-3.6 1.8-.8.8-1.4 2.2-1.2 3.6 1.2 0 2.6-.6 3.6-1.6z"/></svg>
+                            <div style={{ textAlign: 'left' }}>
+                                <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.8 }}>Download on the</div>
+                                <div style={{ fontSize: '18px', fontWeight: 600 }}>App Store</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center', zIndex: 2 }}>
+                    <div style={{
+                        width: '240px',
+                        height: '480px',
+                        background: '#0ea5e9',
+                        borderRadius: '36px',
+                        border: '8px solid #1e293b',
+                        boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white'
+                    }}>
+                        {/* Fake phone notch */}
+                        <div style={{
+                            position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
+                            width: '120px', height: '24px', background: '#1e293b',
+                            borderBottomLeftRadius: '12px', borderBottomRightRadius: '12px'
+                        }}></div>
+                        
+                        <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏠</div>
+                        <h3 style={{ fontSize: '24px', fontWeight: 800, textAlign: 'center', padding: '0 20px' }}>HomeConnect<br/>App</h3>
+                        <div style={{ marginTop: '32px', width: '80%', height: '8px', background: 'rgba(255,255,255,0.3)', borderRadius: '4px' }}></div>
+                        <div style={{ marginTop: '16px', width: '60%', height: '8px', background: 'rgba(255,255,255,0.3)', borderRadius: '4px' }}></div>
+                        <div style={{ marginTop: '16px', width: '80%', height: '8px', background: 'rgba(255,255,255,0.3)', borderRadius: '4px' }}></div>
+                        <div style={{ marginTop: '16px', width: '70%', height: '8px', background: 'rgba(255,255,255,0.3)', borderRadius: '4px' }}></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         </div>
     );
 };

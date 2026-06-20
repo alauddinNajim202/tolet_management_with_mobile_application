@@ -19,9 +19,9 @@ const Navbar = () => {
     return (
         <header className="navbar">
             <div className="app-container navbar-content">
-                <Link to="/" className="logo" style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-                    <img src="/images/logo.png" alt="HomeConnect Logo" style={{height: '48px', width: 'auto'}} />
-                    <span style={{fontSize: '26px', fontWeight: '800', letterSpacing: '-0.5px'}}>HomeConnect</span>
+                <Link to="/" className="logo">
+                    <div style={{ background: 'var(--primary-blue)', color: 'white', padding: '4px 8px', borderRadius: '8px', fontSize: '20px' }}>🏠</div>
+                    <span>HomeConnect</span>
                 </Link>
                 <nav className="nav-links">
                     <Link to="/">Home</Link>
@@ -32,13 +32,13 @@ const Navbar = () => {
                 <div style={{display: 'flex', gap: '16px', alignItems: 'center'}}>
                     {isAuthenticated ? (
                         <>
-                            <Link to="/dashboard" style={{color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600, fontSize: '14px'}}>My Dashboard</Link>
-                            <button onClick={handleLogout} className="btn-primary" style={{background: '#f1f5f9', color: '#334155', padding: '8px 16px', fontSize: '14px'}}>Log out</button>
+                            <Link to="/dashboard" style={{color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600, fontSize: '15px'}}>My Dashboard</Link>
+                            <button onClick={handleLogout} className="btn-outline">Log out</button>
                         </>
                     ) : (
                         <>
-                            <Link to="/login" style={{color: 'var(--text-main)', textDecoration: 'none', fontWeight: 500, fontSize: '14px'}}>Log in</Link>
-                            <Link to="/register" className="btn-primary" style={{padding: '8px 16px', fontSize: '14px'}}>Sign up</Link>
+                            <Link to="/login" style={{color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600, fontSize: '15px'}}>Log in</Link>
+                            <Link to="/register" className="btn-primary">Sign up</Link>
                         </>
                     )}
                 </div>

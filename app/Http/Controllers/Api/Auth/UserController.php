@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\AdminBlockRules;
-use App\Models\AdminCategoryOverride;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -257,49 +256,29 @@ class UserController extends Controller
     }
 
 
-
-    public function admin_block_rules(Request $request)
+    public function password_update(Request $request)
     {
+        try {
+            $request->validate([
+                'old_password' => 'required|string',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
 
-        // $providedToken = $request->header('Authorization');
-
-
-        // if (str_starts_with($providedToken, 'Bearer ')) {
-        //     $providedToken = substr($providedToken, 7);
-        // }
-
-        // $secretToken = env('API_SECRET_TOKEN');
-
-        // if ($providedToken !== $secretToken) {
-        //     return Helper::jsonResponse(false, 'Unauthorized', 401);
-        // }
-
-
-        $adminBlockRules = AdminBlockRules::where('enabled', 1)->get(['pattern', 'reason']);
-
-        return response()->json($adminBlockRules);
-    }
-
-
-    public function admin_category_override(Request $request)
-    {
-
-        // $providedToken = $request->header('Authorization');
-
-
-        // if (str_starts_with($providedToken, 'Bearer ')) {
-        //     $providedToken = substr($providedToken, 7);
-        //  }
-
-        // $secretToken = env('API_SECRET_TOKEN');
-
-        // if ($providedToken !== $secretToken) {
-        //     return Helper::jsonResponse(false, 'Unauthorized', 401);
-        // }
-
-
-        $adminCategoryOverride = AdminCategoryOverride::where('enabled', 1)->get(['question_pattern', 'forced_category']);
-
-        return response()->json($adminCategoryOverride);
+            $user = auth('api')->user();
+            if (! Hash::check($request->old_password, $user->password)) {
+                return Helper::jsonResponse(false, 'Invalid old password', 401);
+            }
+            $user->password = Hash::make($request->password);
+            $user->save();
+            $data = User::select($this->select)->find($user->id);
+            return Helper::jsonResponse(true, 'Password updated successfully', 200, $data);
+        } catch (ValidationException $e) {
+            return Helper::jsonErrorResponse($e->errors(), 422);
+        } catch (Throwable $e) {
+            return Helper::jsonErrorResponse(
+                config('app.debug') ? $e->getMessage() : 'Internal server error',
+                500
+            );
+        }
     }
 }
