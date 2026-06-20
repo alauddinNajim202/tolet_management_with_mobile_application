@@ -171,9 +171,28 @@ class PropertyController extends Controller
             return Helper::jsonErrorResponse($e->getMessage(), 500);
         }
     }
-    public function update(Request $request, $id)
+
+
+
+
+
+
+
+    public function update(Request $request)
     {
-        $property = Property::findOrFail($id);
+        $property_id = $request->property_id;
+
+
+        $validator = Validator::make($request->all(), [
+            'property_id' => 'required|exists:properties,id',
+        ]);
+
+        if ($validator->fails()) {
+            return Helper::jsonErrorResponse('Validation error', 422, $validator->errors()->toArray());
+        }
+
+
+        $property = Property::findOrFail($property_id);
 
         if ($property->user_id !== auth('api')->id()) {
             return Helper::jsonErrorResponse('Unauthorized to edit this property', 403);
@@ -299,9 +318,14 @@ class PropertyController extends Controller
             return Helper::jsonErrorResponse('Unauthorized to delete this property', 403);
         }
 
+        
+
         $property->delete();
         return Helper::jsonResponse(true, 'Property deleted successfully.', 200);
-    }    public function deleteImage($imageId)
+    }    
+    
+    
+    public function deleteImage($imageId)
     {
         $image = PropertyImage::findOrFail($imageId);
         $property = Property::findOrFail($image->property_id);
@@ -332,4 +356,7 @@ class PropertyController extends Controller
 
         return Helper::jsonResponse(true, 'Thumbnail deleted successfully', 200);
     }
+
+
+
 }

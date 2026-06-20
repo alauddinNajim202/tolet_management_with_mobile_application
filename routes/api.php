@@ -57,7 +57,7 @@ Route::get('/property/details/{id}', [HomeController::class, 'propertyDetails'])
 Route::middleware(['auth:api'])->controller(PropertyController::class)->prefix('auth/property')->group(function () {
     Route::get('/my-listing', 'index');
     Route::post('/store', 'store');
-    Route::post('/update/{id}', 'update');
+    Route::post('/update', 'update');
     Route::delete('/destroy/{id}', 'destroy');
     Route::delete('/image/{imageId}', 'deleteImage');
     Route::delete('/{id}/thumbnail', 'deleteThumbnail');
